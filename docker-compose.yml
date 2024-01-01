@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  api_qldiemsv:
+    image: ${DOCKER_REGISTRY-}apiqldiemsv
+    build:
+      context: .
+      dockerfile: API_QLDiemSV/Dockerfile
+    environment:
+      - ConnectionStrings__QLDiemSVDB=Server=host.docker.internal,1433;Database=QLDiemSV;User ID=sa;Password=kc;Trust Server Certificate=True;
+      - ConnectionStrings__SVDB=Server=host.docker.internal,1433;Database=SVDB;User ID=sa;Password=kc;Trust Server Certificate=True;
+    ports:
+      - "4201:80"
+      - "4202:443"
+
+  api_sinhvien:
+    image: ${DOCKER_REGISTRY-}apisinhvien
+    build:
+      context: .
+      dockerfile: API_SinhVien/Dockerfile
+    environment:
+      - ConnectionStrings__SVDB=Server=host.docker.internal,1433;Database=SVDB;User ID=sa;Password=kc;Trust Server Certificate=True;
+    ports:
+      - "4203:80"
+      - "4204:443"
+
